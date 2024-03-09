@@ -5,6 +5,7 @@ import { fullProduct } from "@/app/interface";
 import { Button } from "@/components/ui/button";
 import { Star, Truck } from "lucide-react";
 import { client } from "../../../sanity/lib/client";
+import { toVND } from "../../../lib/utils";
 
 async function getData(slug: string) {
   const query = `*[_type == "product" && slug.current == "${slug}"][0] {
@@ -62,10 +63,10 @@ export default async function ProductPge({
             <div className="mb-4">
               <div className="flex items-end gap-2">
                 <span className="text-xl font-bold text-gray-800 md:text-2xl">
-                  ${data.price}
+                  {toVND(data.price)}
                 </span>
                 <span className="mb-0.5 text-red-500 line-through">
-                  ${data.price + 30}
+                  {toVND(data.price + 50000)}
                 </span>
               </div>
 
@@ -86,7 +87,7 @@ export default async function ProductPge({
                 image={data.images[0]}
                 name={data.name}
                 price={data.price}
-                key={data._id}
+                key={"bag_"+data._id}
                 price_id={data.price_id}
               />
               <CheckoutNow
