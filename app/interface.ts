@@ -25,6 +25,10 @@ export type item = {
 };
 
 export type product = {
+    id: string;
+} & productAttributes;
+
+export type productAttributes = {
     name: string;
     category: string;
     price: number;

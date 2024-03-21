@@ -1,39 +1,35 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useShoppingCart } from "use-shopping-cart";
-import { urlForImage } from "../../sanity/lib/image";
-export interface ProductCart {
-    name: string;
-    description: string;
-    price: number;
-    currency: string;
-    image: any;
-    price_id: string;
-}
+import { cartNewItem, useShoppingCart } from "../../store/cart-provider";
 
 export default function AddToBag({
-    currency,
+    id,
+    imageUrl,
     description,
-    image,
     name,
+    category,
+    slug,
     price,
-    price_id,
-}: ProductCart) {
+}: cartNewItem) {
     const { addItem, handleCartClick } = useShoppingCart();
 
     const product = {
+        id: id,
         name: name,
         description: description,
         price: price,
-        currency: currency,
-        image: urlForImage(image),
-        price_id: price_id,
+        imageUrl: imageUrl,
+        category: category,
+        slug: slug,
     };
     return (
         <Button
             onClick={() => {
-                addItem(product), handleCartClick();
+				console.log('Add to cart clicked');
+                addItem(product);
+				console.log('Toggle cart');
+                handleCartClick();
             }}
         >
             Add To Cart
