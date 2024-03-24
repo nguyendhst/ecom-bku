@@ -8,8 +8,8 @@ import {
 } from "@/components/ui/sheet";
 
 import Image from "next/image";
-import { useShoppingCart } from "use-shopping-cart";
 import { toVND } from "../../lib/utils";
+import { useShoppingCart } from "../../store/cart-provider";
 
 export default function ShoppingCartModal() {
   const {
@@ -27,7 +27,7 @@ export default function ShoppingCartModal() {
     try {
       const result = await redirectToCheckout();
       if (result?.error) {
-        console.log("result");
+        console.log("result", result.error);
       }
     } catch (error) {
       console.log(error);
@@ -51,7 +51,7 @@ export default function ShoppingCartModal() {
                     <li key={entry.id} className="flex py-6">
                       <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                         <Image
-                          src={entry.image as string}
+                          src={entry.imageUrl as string}
                           alt="Product image"
                           width={100}
                           height={100}
@@ -100,7 +100,7 @@ export default function ShoppingCartModal() {
             </p>
 
             <div className="mt-6">
-              <Button onClick={handleCheckoutClick} className="w-full">
+              <Button disabled={cartCount <= 0} onClick={handleCheckoutClick} className="w-full">
                 Checkout
               </Button>
             </div>
