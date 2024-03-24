@@ -9,13 +9,7 @@ import React, {
     useState,
 } from "react";
 import { productAttributes } from "../app/interface";
-import { generateHMAC, toVND } from "../lib/utils";
-import {
-    appid,
-    appuser,
-    generateAppTransID,
-    generateHMACSignature,
-} from "../lib/zalopay";
+import { toVND } from "../lib/utils";
 import { useRouter } from "next/navigation";
 import qs from "qs";
 
@@ -39,11 +33,11 @@ type cartEntryAttributes = {
     timeAdded: string;
 } & productAttributes;
 
-type cartEntry = { id: string } & cartEntryAttributes;
+export type cartEntry = { id: string } & cartEntryAttributes;
 
 export type cartNewItem = { id: string } & productAttributes;
 
-type cartDetails = {
+export type cartDetails = {
     [key: string]: cartEntry;
 };
 
@@ -160,19 +154,24 @@ const cartReducer: cartReducer = (state, action) => {
             };
 
         case "REDIRECT_TO_CHECKOUT":
-            // Call to payment gateway
             console.log("Redirecting to checkout");
-            return state;
+            return {
+				...state,
+				shouldDisplayCart: false,
+			}
         default:
             return state;
     }
 };
 
 const getCartFromLocalStorage = (): cartState => {
+    console.log("getCartFromLocalStorage");
     if (typeof window !== "undefined") {
         const cart = localStorage.getItem("cart");
         if (cart) {
-            return JSON.parse(cart);
+            const storedState = JSON.parse(cart);
+            // we want the sheet to be closed by default
+            return { ...storedState, shouldDisplayCart: false };
         }
     }
     return {
@@ -223,64 +222,15 @@ export function ShoppingCartProvider({ children }: any) {
     }> => {
         dispatch({ type: "REDIRECT_TO_CHECKOUT", itemId: "" });
 
-        try {
-            const base = "https://sb-openapi.zalopay.vn/v2/create";
-            // create a new order
-            const time = new Date();
-            const embed_data = `{"promotioninfo":"","merchantinfo":"du lieu rieng cua ung dung"}`;
-            const item = `[{"itemid":"knb","itename":"kim nguyen bao","itemprice":198400,"itemquantity":1}]`;
-            const amount = "50000";
-      
-            const payload = {
-                app_id: appid,
-                app_user: appuser,
-                app_trans_id: generateAppTransID(time),
-                app_time: time.getTime(),
-                amount: amount,
-                item: item,
-                description: "Thanh toan don hang",
-                bank_code: "zalopayapp",
-                embed_data: embed_data,
-            };
-			
-			const mac = await generateHMACSignature(payload);
-
-			const request = {
-				...payload,
-				mac: mac,
-			}
-
-            console.log("request", request);
-            try {
-                const response = await fetch(base, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded",
-                    },
-                    mode: "no-cors",
-                    body: qs.stringify(request),
-                });
-
-                if (!response.ok) {
-                    const text = await response.text();
-                    console.log("Server response:", text);
-                    throw new Error("Network response was not ok");
-                }
-
-                const data = await response.json();
-                // get order_url and redirect to it
-                const order_url = data.order_url;
-                console.log("order_url", order_url);
-                router.push(order_url);
-            } catch (error: unknown) {
-                console.log("error", error);
-            }
-
-            return { success: true, error: "" };
-        } catch (error: unknown) {
-            return { success: false, error: error as string };
-        }
+        //const { success, error } = await createOrder();
+        //if (!success) {
+        //    return { success: false, error };
+        //}
+        // redirect to checkout page
+        router.push("/checkout");
+        return { success: true, error: "" };
     };
+
     const checkoutSingleItem = (itemId: string) => {
         // Redirect to checkout page with only the single item
         Object.keys(state.cartDetails).forEach((id) => {
@@ -321,4 +271,46 @@ export function useShoppingCart() {
     }
 
     return context;
+}
+
+export async function createOrder() {
+    try {
+        // create a new order
+        const time = new Date();
+        const embed_data = `{"promotioninfo":"","merchantinfo":"du lieu rieng cua ung dung"}`;
+        const item = `[{"itemid":"knb","itename":"kim nguyen bao","itemprice":198400,"itemquantity":1}]`;
+        const amount = "50000";
+
+        const payload = {
+            app_time: time.getTime(),
+            amount: amount,
+            item: item,
+            description: "Thanh toan don hang",
+            bank_code: "zalopayapp",
+            embed_data: embed_data,
+        };
+
+        // POST to api/checkout
+        const response = await fetch("/api/checkout", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: qs.stringify(payload),
+        });
+
+        const data = await response.json();
+
+        if (data.error) {
+            return { success: false, error: data.error };
+        }
+		// get the payment url from the response
+		const paymentUrl = data.order_url;
+		// open the payment url in a new tab
+		window.open(paymentUrl, "_blank");
+
+        return { success: true, error: "" };
+    } catch (error: unknown) {
+        return { success: false, error: error as string };
+    }
 }

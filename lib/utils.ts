@@ -1,9 +1,14 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import crypto from "crypto";
 
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
 }
+
+export const phoneRegex = new RegExp(
+    /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/
+);
 
 export function toVND(price: number) {
     return new Intl.NumberFormat("vi-VN", {
@@ -12,7 +17,7 @@ export function toVND(price: number) {
     }).format(price);
 }
 
-export async function generateHMAC(message: string, key: string) {
+export async function generateHmacClientSide(message: string, key: string) {
     const encoder = new TextEncoder();
     const keyData = encoder.encode(key);
     const msgData = encoder.encode(message);
@@ -33,3 +38,12 @@ export async function generateHMAC(message: string, key: string) {
         .join("");
     return digest;
 }
+
+export function generateHMAC(message: string, key: string) {
+    const hmac = crypto.createHmac("sha256", key);
+    hmac.update(message);
+    const digest = hmac.digest("hex");
+    return digest;
+}
+
+// if window is not availabl

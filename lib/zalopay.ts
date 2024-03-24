@@ -17,15 +17,23 @@ export const generateAppTransID = (date: Date) => {
     return yymmdd + "_" + rand;
 };
 
-export const generateHMACSignature = async (
-	date: Date,
-    embed: string,
-    item: string,
-    amount: string
-): Promise<string> => {
-    const apptransid = generateAppTransID(date);
+export const generateHMACSignature = async (payload: {
+    app_id: string;
+    app_user: string;
+    app_trans_id: string;
+    app_time:string;
+    amount: string;
+    item: string;
+    description: string;
+    bank_code: string;
+    embed_data: string;
+}): Promise<string> => {
+    // convert app_time to Date object
+    const date = new Date(Number(payload.app_time));
     const req = date.getTime().toString();
-    const message = `${appid}|${apptransid}|${appuser}|${amount}|${req}|${embed}|${item}`;
+    const message = `${appid}|${payload.app_trans_id}|${payload.app_user}|${payload.amount}|${req}|${payload.embed_data}|${payload.item}`;
+
+	console.log("message", message);
 
     return generateHMAC(message, key1);
 };
