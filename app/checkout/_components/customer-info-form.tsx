@@ -15,9 +15,10 @@ import {
 	FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import React from "react";
+import React, { forwardRef, useImperativeHandle } from "react";
 import { useCheckoutForm } from "../page";
 import FormWrapper from "./form-wrapper";
+import { Textarea } from "../../../components/ui/textarea";
 
 const formSchema = z.object({
 	name: z.string().min(1).max(255),
@@ -33,7 +34,7 @@ const formSchema = z.object({
 	}),
 });
 
-export const CustomerInfoForm = () => {
+export const CustomerInfoForm = forwardRef((props, ref) => {
 	const { formData: data, setCustomerData } = useCheckoutForm();
 
 	const form = useForm<z.infer<typeof formSchema>>({
@@ -41,11 +42,13 @@ export const CustomerInfoForm = () => {
 		resolver: zodResolver(formSchema),
 	});
 
-	const {
-		handleSubmit,
-	} = form;
+	const { handleSubmit } = form;
 
 	const { control } = form;
+
+	useImperativeHandle(ref, () => ({
+		validate: () => form.trigger(),
+	}));
 
 	// if validation passed, this function will be called
 	const validationSuccessfulCallback = (values: z.infer<typeof formSchema>) => {
@@ -187,9 +190,15 @@ export const CustomerInfoForm = () => {
 								<FormItem>
 									<FormLabel htmlFor={field.name}>Note</FormLabel>
 									<FormControl>
-										<Input {...field} />
+										<Textarea
+											placeholder="Enter your note"
+											className="resize-none h-24 w-full border border-input rounded-md px-3 py-2 text-sm shadow-sm placeholder-text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+											{...field}
+										/>
 									</FormControl>
-									<FormDescription>Enter your note</FormDescription>
+									<FormDescription>
+										Provide note about your delivery
+									</FormDescription>
 									<FormMessage />
 								</FormItem>
 							)}
@@ -201,4 +210,4 @@ export const CustomerInfoForm = () => {
 			</Form>
 		</FormWrapper>
 	);
-};
+});

@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import * as ToggleGroupPrimitive from "@radix-ui/react-toggle-group"
+// biome-ignore lint/style/useImportType: <explanation>
 import { VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
