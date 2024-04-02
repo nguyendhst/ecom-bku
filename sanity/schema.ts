@@ -1,4 +1,4 @@
-import { type SchemaTypeDefinition } from "sanity";
+import type { SchemaTypeDefinition } from "sanity";
 import coffeeSchema from "./schemas/coffee";
 import heroImageSchema from "./schemas/hero-image";
 import blendSchema from "./schemas/blend";
@@ -9,8 +9,8 @@ import { categorySchema } from "./schemas/category";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
     types: [
-		productSchema,
-		categorySchema,
+        productSchema,
+        categorySchema,
         coffeeSchema,
         blendSchema,
         accessoriesSchema,

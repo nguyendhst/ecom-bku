@@ -7,14 +7,14 @@ export const appuser = "demo";
 
 export const generateAppTransID = (date: Date) => {
     const year = date.getFullYear().toString().substr(-2);
-    const month = ("0" + (date.getMonth() + 1)).slice(-2);
-    const day = ("0" + date.getDate()).slice(-2);
+    const month = (`0${date.getMonth() + 1}`).slice(-2);
+    const day = (`0${date.getDate()}`).slice(-2);
 
     const yymmdd = year + month + day;
 
     const rand = Math.random().toString().slice(2, 13);
 
-    return yymmdd + "_" + rand;
+    return `${yymmdd}_${rand}`;
 };
 
 export const generateHMACSignature = async (payload: {

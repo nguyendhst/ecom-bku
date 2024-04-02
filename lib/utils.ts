@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+// biome-ignore lint/style/useNodejsImportProtocol: <explanation>
 import crypto from "crypto";
 
 export function cn(...inputs: ClassValue[]) {
