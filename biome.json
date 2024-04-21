@@ -11,5 +11,15 @@
                 "noExplicitAny": "off"
             }
         }
-    }
+    },
+	"files": {
+		"ignore": [
+			"**/node_modules/**",
+			"**/dist/**",
+			"**/build/**",
+			"**/coverage/**",
+			"**/out/**",
+			"**/temp/**"
+		]
+	}
 }

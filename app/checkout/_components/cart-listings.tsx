@@ -1,8 +1,8 @@
 "use client";
 
 import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
-import { ColumnDef } from "@tanstack/react-table";
-import { cartDetails, cartEntry } from "../../../store/cart-provider";
+import type { ColumnDef } from "@tanstack/react-table";
+import type { cartDetails, cartEntry } from "../../../store/cart-provider";
 import { DataTable } from "../../components/data-table";
 import FormWrapper from "./form-wrapper";
 

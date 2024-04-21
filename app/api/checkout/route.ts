@@ -4,10 +4,10 @@ import {
     generateHMACSignature,
 } from "../../../lib/zalopay";
 
-export const key1 = "PcY4iZIKFCIdgZvA6ueMcMHHUbRLYjPL";
-export const key2 = "kLtgPl8HHhfvMuDHPwKfgfsY4Ydm9eIz";
-export const appid = "2553";
-export const appuser = "demo";
+const key1 = "PcY4iZIKFCIdgZvA6ueMcMHHUbRLYjPL";
+const key2 = "kLtgPl8HHhfvMuDHPwKfgfsY4Ydm9eIz";
+const appid = "2553";
+const appuser = "demo";
 
 const base = "https://sb-openapi.zalopay.vn/v2/create";
 

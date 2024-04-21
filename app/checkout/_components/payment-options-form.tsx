@@ -1,15 +1,10 @@
 "use client";
 
 import FormWrapper from "./form-wrapper";
-import {
-	ToggleGroup,
-	ToggleGroupItem,
-} from "../../../components/ui/toggle-group";
 import Image from "next/image";
 import momo from "../../../public/assets/momo.png";
 import zalopay from "../../../public/assets/zalopay.png";
 import cod from "../../../public/assets/cod.png";
-import { useCheckoutForm } from "../page";
 import { forwardRef, useImperativeHandle } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -23,6 +18,7 @@ import {
 	FormMessage,
 } from "../../../components/ui/form";
 import { RadioGroup, RadioGroupItem } from "../../../components/ui/radio-group";
+import { useCheckoutForm } from "../../../store/checkout";
 
 const formSchema = z.object({
 	type: z.enum(["cod", "zalopay", "momo"], {

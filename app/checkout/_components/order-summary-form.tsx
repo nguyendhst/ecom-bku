@@ -1,7 +1,7 @@
 "use client";
 
 import { z } from "zod";
-import { useCheckoutForm } from "../page";
+import { useCheckoutForm } from "../../../store/checkout";
 import FormWrapper from "./form-wrapper";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
