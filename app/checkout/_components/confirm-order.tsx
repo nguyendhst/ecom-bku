@@ -1,9 +1,9 @@
 import { forwardRef, useImperativeHandle } from "react";
-import { CheckoutForm } from "../page";
 import { createOrder } from "../../../store/cart-provider";
 import FormWrapper from "./form-wrapper";
 import { toVND } from "../../../lib/utils";
 import { Separator } from "../../../components/ui/separator";
+import type { CheckoutForm } from "../../../store/checkout";
 
 export const ConfirmOrderForm = forwardRef(
     (
@@ -30,16 +30,20 @@ export const ConfirmOrderForm = forwardRef(
             (delivery_option.type === "fast" ? 50000 : 15000);
 
         useImperativeHandle(ref, () => ({
-            submit: async () =>
-                new Promise<boolean>(async (resolve) => {
-					console.log("submitting order", payment.type)
+            submit: () =>
+                new Promise<boolean>((resolve) => {
+                    console.log("submitting order", payment.type);
                     if (payment.type === "zalopay") {
-                        const result = await createZalopayOrder();
-                        if (!result) {
-                            resolve(false);
-                        }
+                        createZalopayOrder().then((result) => {
+                            if (!result) {
+                                resolve(false);
+                            } else {
+                                resolve(true);
+                            }
+                        });
+                    } else {
+                        resolve(true);
                     }
-                    resolve(true);
                 }),
         }));
 
@@ -70,6 +74,7 @@ export const ConfirmOrderForm = forwardRef(
                                 }
 
                                 <button
+                                    type="button"
                                     onClick={() => goTo(0)}
                                     className="text-primary text-bold"
                                 >
@@ -115,6 +120,7 @@ export const ConfirmOrderForm = forwardRef(
                             Payment Method: {payment.type}
                         </p>
                         <button
+                            type="button"
                             onClick={() => goTo(2)}
                             className="text-primary text-bold"
                         >

@@ -4,7 +4,6 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { phoneRegex } from "../../../lib/utils";
 import { useForm } from "react-hook-form";
-import { Button } from "@/components/ui/button";
 import {
 	Form,
 	FormControl,
@@ -16,9 +15,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import React, { forwardRef, useImperativeHandle } from "react";
-import { useCheckoutForm } from "../page";
 import FormWrapper from "./form-wrapper";
 import { Textarea } from "../../../components/ui/textarea";
+import { useCheckoutForm } from "../../../store/checkout";
 
 const formSchema = z.object({
 	name: z.string().min(1).max(255),
