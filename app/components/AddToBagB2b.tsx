@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { cartNewItem, useShoppingCart } from "../../store/cart-provider";
 
-export default function AddToBag({
+export default function AddToBagB2b({
     id,
     imageUrl,
     description,
