@@ -35,7 +35,7 @@ type cartEntryAttributes = {
 
 export type cartEntry = { id: string } & cartEntryAttributes;
 
-export type cartNewItem = { id: string } & productAttributes;
+export type cartNewItem = { id: string } & productAttributes & {login: boolean} & {mustLogin : boolean};
 
 export type cartDetails = {
 	[key: string]: cartEntry;
