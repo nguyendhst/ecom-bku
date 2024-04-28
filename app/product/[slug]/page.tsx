@@ -108,6 +108,8 @@ export default function Page({ params }: { params: { slug: string } }) {
                                     category={data.categoryName}
                                     slug={data.slug}
                                     price={data.price}
+                                    login={true}
+                                    mustLogin={false}
                                 />
                                 <CheckoutNow
 									id={data.price_id}
@@ -118,6 +120,8 @@ export default function Page({ params }: { params: { slug: string } }) {
                                     key={data._id}
 									category={data.categoryName}
 									slug={data.slug}
+                                    login={true}
+                                    mustLogin={false}
                                 />
                             </div>
                         )}
