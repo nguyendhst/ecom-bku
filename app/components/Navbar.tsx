@@ -4,9 +4,9 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ShoppingBag } from "lucide-react";
-//import { useShoppingCart } from "use-shopping-cart";
 import { LinearGradient } from "react-text-gradients";
 import { useShoppingCart } from "../../store/cart-provider";
+import { Cardo } from "next/font/google";
 
 const links = [
     { name: "Home", href: "/" },
@@ -15,6 +15,8 @@ const links = [
     { name: "Coffee Makers", href: "/coffee-maker" },
 ];
 
+const font = Cardo({ weight: "400", subsets: ["latin"] });
+
 export default function Navbar() {
     const pathname = usePathname();
     const { handleCartClick } = useShoppingCart();
@@ -22,19 +24,22 @@ export default function Navbar() {
         <header className="mb-8 border-b">
             <div className="flex items-center justify-between mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl">
                 <Link href="/">
-                    <h1 className="text-2xl md:text-4xl font-bold">
-                        Highland
+                    <h1
+                        className="text-2xl md:text-4xl font-bold"
+                        style={font.style}
+                    >
                         <LinearGradient
                             gradient={["to left", "#392107 ,#663399"]}
+                            style={font.style}
                         >
-                            Soul
+                            Sparrow
                         </LinearGradient>
                     </h1>
                 </Link>
 
                 <nav className="hidden gap-12 lg:flex 2xl:ml-16">
                     {links.map((link, idx) => (
-                        <div key={idx}>
+                        <div key={link.href}>
                             {pathname === link.href ? (
                                 <Link
                                     className="text-lg font-semibold text-primary"

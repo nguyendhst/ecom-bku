@@ -16,6 +16,7 @@ export interface fullProduct {
     name: string;
     description: string;
     price_id: string;
+	blends: string[];
 }
 
 export type item = {
@@ -35,4 +36,5 @@ export type productAttributes = {
     slug: string;
     description: string;
     imageUrl: string;
+	blends: string[];
 };
