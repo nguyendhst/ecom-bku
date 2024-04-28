@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { cartNewItem, useShoppingCart } from "../../store/cart-provider";
+import { type cartNewItem, useShoppingCart } from "../../store/cart-provider";
 
 export default function AddToBagB2b({
     id,
@@ -25,7 +25,8 @@ export default function AddToBagB2b({
         category: category,
         slug: slug,
         login: login,
-        mustLogin: mustLogin
+        mustLogin: mustLogin,
+		blends: [],
     };
     return (
         <Button

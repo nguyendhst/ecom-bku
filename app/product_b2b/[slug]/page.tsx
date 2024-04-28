@@ -2,7 +2,7 @@
 
 import CheckoutNow from "@/app/components/CheckoutNow";
 import ImageGallery from "@/app/components/ImageGallery";
-import { fullProduct } from "@/app/interface";
+import type { fullProduct } from "@/app/interface";
 import { Button } from "@/components/ui/button";
 import { Star, Truck } from "lucide-react";
 import { client } from "../../../sanity/lib/client";
@@ -31,7 +31,8 @@ async function getData(slug: string) {
           description,
           "slug": slug.current,
           "categoryName": category->name,
-          price_id
+          price_id,
+		  "blends": coffee->blends[]->name
       }`;
 
     const data = await client.fetch(query);
@@ -49,6 +50,7 @@ export default function Page({ params }: { params: { slug: string } }) {
         name: "",
         description: "",
         price_id: "",
+        blends: [],
     });
     const [loading, setLoading] = useState(true);
     const [showModal, setShowModal] = useState(false);
@@ -159,6 +161,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                                         price={data.price}
                                         login={isLogin}
                                         mustLogin={true}
+										blends={data.blends}
                                     />
                                 </div>
 
@@ -173,6 +176,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                                     slug={data.slug}
                                     login={isLogin}
                                     mustLogin={false}
+									blends={data.blends}
                                 />
                             </div>
                         )}
