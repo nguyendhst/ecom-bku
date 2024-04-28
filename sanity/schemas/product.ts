@@ -43,6 +43,12 @@ export const productSchema = {
             title: "Stripe Price ID",
             type: "string",
         },
+		{
+			name: "coffee",
+			title: "Coffee",
+			type: "reference",
+			to: [{ type: "coffee" }],
+		}
     ],
 };
 
