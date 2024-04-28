@@ -39,6 +39,9 @@ export default function Page() {
 			isPaymentOptionsValid
 		) {
 			console.log("Validation successful");
+
+
+
 			const createZalopayOrder = async () => {
 				const { success, error } = await createOrder();
 				return success;

@@ -39,7 +39,7 @@ export default function Page({ params }: { params: { slug: string } }) {
         name: "",
         description: "",
         price_id: "",
-		blends: [],
+        blends: [],
     });
     const [loading, setLoading] = useState(true);
 
@@ -109,7 +109,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                                 category={data.categoryName}
                                 slug={data.slug}
                                 price={data.price}
-								blends={data.blends}
+                                blends={data.blends}
                             />
                             <CheckoutNow
                                 id={data.price_id}
@@ -120,7 +120,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                                 key={data._id}
                                 category={data.categoryName}
                                 slug={data.slug}
-								blends={data.blends}
+                                blends={data.blends}
                             />
                         </div>
                     )}

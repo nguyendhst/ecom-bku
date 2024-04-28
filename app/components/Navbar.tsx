@@ -13,6 +13,7 @@ const links = [
     { name: "Coffee", href: "/coffee" },
     { name: "Accessories", href: "/accessories" },
     { name: "Coffee Makers", href: "/coffee-maker" },
+    { name: "B2B Outlet", href: "/b2b"}
 ];
 
 const font = Cardo({ weight: "400", subsets: ["latin"] });
