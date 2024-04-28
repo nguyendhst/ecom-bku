@@ -11,6 +11,8 @@ export default function AddToBag({
     category,
     slug,
     price,
+    login,
+    mustLogin
 }: cartNewItem) {
     const { addItem, handleCartClick } = useShoppingCart();
 
@@ -22,6 +24,8 @@ export default function AddToBag({
         imageUrl: imageUrl,
         category: category,
         slug: slug,
+        login: login,
+        mustLogin: mustLogin
     };
     return (
         <Button
@@ -29,7 +33,12 @@ export default function AddToBag({
 				console.log('Add to cart clicked');
                 addItem(product);
 				console.log('Toggle cart');
-                handleCartClick();
+                if (!mustLogin){
+                    handleCartClick();
+                } 
+                if (login){
+                    handleCartClick();
+                }
             }}
         >
             Add To Cart
