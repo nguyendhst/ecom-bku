@@ -39,7 +39,7 @@ export default function AddToBag({
     };
     return (
         <div className="flex flex-col justify-start w-full">
-            <div>
+            <div className="flex justify-start">
                 <ToggleGroup type="single">
                     {blends.map((blend) => (
                         <ToggleGroupItem value={blend}>{blend}</ToggleGroupItem>

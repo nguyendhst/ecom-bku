@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { cartNewItem, useShoppingCart } from "../../store/cart-provider";
+import { type cartNewItem, useShoppingCart } from "../../store/cart-provider";
 
 export default function CheckoutNow({
 	id,
@@ -25,13 +25,15 @@ export default function CheckoutNow({
     image: imageUrl,
   };
   return (
-    <Button
-      variant="outline"
-      onClick={() => {
-        buyNow(id);
-      }}
-    >
-      Checkout Now
-    </Button>
+    <div className="flex flex-shrink">
+		<Button
+		  variant="outline"
+		  onClick={() => {
+			buyNow(id);
+		  }}
+		>
+		  Checkout Now
+		</Button>
+	</div>
   );
 }
