@@ -376,8 +376,11 @@ export async function createOrder() {
         if (data.error) {
             return { success: false, error: data.error };
         }
+
+		console.log("data", data)
         // get the payment url from the response
         const paymentUrl = data.order_url;
+		console.log("paymentUrl", paymentUrl)
         // open the payment url in a new tab
         window.open(paymentUrl, "_blank");
 
