@@ -39,13 +39,17 @@ export default function AddToBag({
     };
     return (
         <div className="flex flex-col justify-start w-full">
-            <div className="flex justify-start">
-                <ToggleGroup type="single">
-                    {blends.map((blend) => (
-                        <ToggleGroupItem value={blend}>{blend}</ToggleGroupItem>
-                    ))}
-                </ToggleGroup>
-            </div>
+            {blends && (
+                <div className="flex justify-start">
+                    <ToggleGroup type="single">
+                        {blends.map((blend) => (
+                            <ToggleGroupItem value={blend}>
+                                {blend}
+                            </ToggleGroupItem>
+                        ))}
+                    </ToggleGroup>
+                </div>
+            )}
 
             <div className="flex items-center gap-2 m-4">
                 <Button variant="outline" onClick={decrementQuantity}>

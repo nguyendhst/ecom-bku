@@ -6,17 +6,17 @@ import { usePathname } from "next/navigation";
 import { ShoppingBag } from "lucide-react";
 import { LinearGradient } from "react-text-gradients";
 import { useShoppingCart } from "../../store/cart-provider";
-import { Cardo } from "next/font/google";
+import { Sonsie_One } from "next/font/google";
 
 const links = [
     { name: "Home", href: "/" },
     { name: "Coffee", href: "/coffee" },
     { name: "Accessories", href: "/accessories" },
     { name: "Coffee Makers", href: "/coffee-maker" },
-    { name: "B2B Outlet", href: "/b2b"}
+    { name: "B2B Outlet", href: "/b2b" },
 ];
 
-const font = Cardo({ weight: "400", subsets: ["latin"] });
+const font = Sonsie_One({ weight: "400", style: "normal", subsets: ["latin"] });
 
 export default function Navbar() {
     const pathname = usePathname();
@@ -33,7 +33,7 @@ export default function Navbar() {
                             gradient={["to left", "#392107 ,#663399"]}
                             style={font.style}
                         >
-                            Sparrow
+                            Nature's Brew
                         </LinearGradient>
                     </h1>
                 </Link>

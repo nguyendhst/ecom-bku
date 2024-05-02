@@ -12,19 +12,15 @@ type latestProducts = {
 };
 
 async function getData() {
-    const query = `*[_type == "coffee"] | order(_createdAt desc)[0...4] {
-		_id,
-		name,
-		"product": product-> {
-		  name,
-		  "category": category->name,
-		  price,
-		  "slug": slug.current,
-		  description,
-		  "imageUrl": images[0].asset->url
-		},
-		"blends": blends[]->name
-	  }`;
+    const query = `*[_type == "product"] | order(_createdAt desc)[0...4] {
+        _id,
+        name,
+        "category": category->name,
+        price,
+        "slug": slug.current,
+        description,
+        "imageUrl": images[0].asset->url
+    }`;
 
     const data = await client.fetch(query);
 
@@ -90,7 +86,7 @@ const ProductCard = ({
         >
             <div className="overflow-hidden rounded-md h-48 sm:h-64 md:h-80 lg:h-96 xl:h-112">
                 <Image
-                    src={item.product.imageUrl}
+                    src={item.imageUrl}
                     alt="Product image"
                     width={1280}
                     height={1114}
@@ -105,13 +101,13 @@ const ProductCard = ({
             <div className="mt-4 flex flex-col sm:flex-row justify-between">
                 <div>
                     <h3 className="text-sm sm:text-base text-gray-700">
-                        <Link href={`/product/${item.product.slug}`}>
+                        <Link href={`/product/${item.slug}`}>
                             {item.name}
                         </Link>
                     </h3>
                 </div>
                 <p className="text-sm sm:text-base font-medium text-gray-900">
-                    {item.product.price.toLocaleString("vi-VN", {
+                    {item.price.toLocaleString("vi-VN", {
                         style: "currency",
                         currency: "VND",
                     })}
