@@ -12,7 +12,7 @@ type latestProducts = {
 };
 
 async function getData() {
-    const query = `*[_type == "product"] | order(_createdAt desc)[0...4] {
+    const query = `*[_type == "product"] | order(_createdAt desc)[0...8] {
         _id,
         name,
         "category": category->name,
@@ -55,7 +55,7 @@ export default async function Newest() {
 
                 <div className="relative">
                     <ScrollArea>
-                        <div className="flex space-x-4 pb-4">
+                        <div className="flex space-x-8 pb-4">
                             {data.items.map((item) => (
                                 <ProductCard
                                     item={item}
@@ -82,7 +82,7 @@ const ProductCard = ({
     return (
         <div
             key={item._id}
-            className="group relative w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5"
+            className="group relative w-full min-w-5 md:w-1/3"
         >
             <div className="overflow-hidden rounded-md h-48 sm:h-64 md:h-80 lg:h-96 xl:h-112">
                 <Image

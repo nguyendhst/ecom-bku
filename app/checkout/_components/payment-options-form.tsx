@@ -58,7 +58,7 @@ export const PaymentOptionsForm = forwardRef((props, ref) => {
 										defaultValue={field.value}
 										className="flex flex-col space-y-2"
 									>
-										<FormItem className="flex items-center space-x-3 space-y-0 w-full m-2 p-2 hover:bg-indigo-200">
+										<FormItem className="flex items-center space-x-3 space-y-0 w-full m-2 p-2 hover:bg-secondary">
 											<FormControl>
 												<RadioGroupItem value="cod" id="cod" />
 											</FormControl>
@@ -79,7 +79,7 @@ export const PaymentOptionsForm = forwardRef((props, ref) => {
 												</div>
 											</FormLabel>
 										</FormItem>
-										<FormItem className="flex items-center space-x-3 space-y-0 w-full m-2 p-2 hover:bg-indigo-200">
+										<FormItem className="flex items-center space-x-3 space-y-0 w-full m-2 p-2 hover:bg-secondary">
 											<FormControl>
 												<RadioGroupItem value="zalopay" id="zalopay" />
 											</FormControl>
@@ -100,7 +100,7 @@ export const PaymentOptionsForm = forwardRef((props, ref) => {
 												</div>
 											</FormLabel>
 										</FormItem>
-										<FormItem className="flex items-center space-x-3 space-y-0 w-full m-2 p-2 hover:bg-indigo-200">
+										<FormItem className="flex items-center space-x-3 space-y-0 w-full m-2 p-2 hover:bg-secondary">
 											<FormControl>
 												<RadioGroupItem value="momo" id="momo" />
 											</FormControl>

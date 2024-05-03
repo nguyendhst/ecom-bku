@@ -40,14 +40,61 @@ export default function AddToBag({
     return (
         <div className="flex flex-col justify-start w-full">
             {blends && (
-                <div className="flex justify-start">
-                    <ToggleGroup type="single">
-                        {blends.map((blend) => (
-                            <ToggleGroupItem value={blend}>
-                                {blend}
+                <div className="flex flex-col space-y-4">
+                    <div className="flex justify-start items-center">
+                        <p className="text-sm font-semibold">Blends:</p>
+                        <ToggleGroup type="single">
+                            {blends.map((blend) => (
+                                <ToggleGroupItem value={blend}>
+                                    {blend}
+                                </ToggleGroupItem>
+                            ))}
+                        </ToggleGroup>
+                    </div>
+
+                    <div className="flex justify-start items-center">
+                        <p className="text-sm font-semibold">Weights:</p>
+                        <ToggleGroup type="single">
+                            <ToggleGroupItem value="100g">100g</ToggleGroupItem>
+                            <ToggleGroupItem value="200g">200g</ToggleGroupItem>
+                            <ToggleGroupItem value="500g">500g</ToggleGroupItem>
+                            <ToggleGroupItem value="1kg">1kg</ToggleGroupItem>
+                        </ToggleGroup>
+                    </div>
+
+                    <div className="flex justify-start items-center">
+                        <p className="text-sm font-semibold">Grind:</p>
+                        <ToggleGroup type="single">
+                            <ToggleGroupItem value="Whole Bean">
+                                Whole Bean
                             </ToggleGroupItem>
-                        ))}
-                    </ToggleGroup>
+                            <ToggleGroupItem value="Fine">Fine</ToggleGroupItem>
+                            <ToggleGroupItem value="Medium">
+                                Medium
+                            </ToggleGroupItem>
+                            <ToggleGroupItem value="Coarse">
+                                Coarse
+                            </ToggleGroupItem>
+                        </ToggleGroup>
+                    </div>
+                    <div className="flex justify-start items-center">
+                        <p className="text-sm font-semibold">Brew Method:</p>
+                        <ToggleGroup type="single">
+                            <ToggleGroupItem value="Espresso">
+                                Espresso
+                            </ToggleGroupItem>
+                            <ToggleGroupItem value="Pour Over">
+                                Pour Over
+                            </ToggleGroupItem>
+                            <ToggleGroupItem value="French Press">
+                                French Press
+                            </ToggleGroupItem>
+                            <ToggleGroupItem value="Aeropress">
+                                Aeropress
+                            </ToggleGroupItem>
+                            <ToggleGroupItem value="Phin">Phin</ToggleGroupItem>
+                        </ToggleGroup>
+                    </div>
                 </div>
             )}
 

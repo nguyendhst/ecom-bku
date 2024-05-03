@@ -48,7 +48,7 @@ export const DeliveryOptionsForm = forwardRef((props, ref) => {
 			title="Delivery Options"
 			description="Select your delivery method"
 		>
-			<div className="bg-white p-4 mt-2 rounded-md border border-indigo-700">
+			<div className="bg-white p-4 mt-2 rounded-md border border-secondary">
 				<div className="flex justify-between items-center">
 					<div className="w-full">
 						<Form {...form}>

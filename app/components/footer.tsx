@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const Footer = () => {
     return (
-        <footer className="bg-gray-800 text-white py-10 px-5">
+        <footer className="bg-black text-white py-10 px-5">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
                 <div>
                     <h3 className="text-lg font-semibold mb-2">Products</h3>
@@ -70,7 +70,7 @@ const Footer = () => {
             </div>
             <div className="text-center mt-10">
                 <p>
-                    &copy; {new Date().getFullYear()} Sparrow. All rights
+                    &copy; {new Date().getFullYear()} Nature's Brew. All rights
                     reserved.
                 </p>
             </div>

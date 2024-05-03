@@ -10,6 +10,8 @@ import { client } from "../../../sanity/lib/client";
 import { toVND } from "../../../lib/utils";
 import { useEffect, useState } from "react";
 import { urlForImage } from "../../../sanity/lib/image";
+import { Input } from "../../../components/ui/input";
+import { Textarea } from "../../../components/ui/textarea";
 
 async function getData(slug: string) {
     const query = `*[_type == "product" && slug.current == "${slug}"][0] {
@@ -54,8 +56,8 @@ export default function Page({ params }: { params: { slug: string } }) {
     }, [params.slug]);
 
     return (
-        <div className="bg-white h-full md:h-screen">
-            <div className="p-8 grid gap-8 grid-cols-1 md:grid-cols-2">
+        <div className="bg-white h-full md:h-full">
+            <div className="p-8 mb-16 grid gap-8 grid-cols-1 md:grid-cols-2">
                 {!loading && <ImageGallery images={data.images} />}
 
                 <div className="py-4 mb-8 md:py-8">
@@ -130,6 +132,75 @@ export default function Page({ params }: { params: { slug: string } }) {
                     </p>
                 </div>
             </div>
+            <CustomerReviews />
         </div>
     );
 }
+
+type Review = {
+    name: string;
+    review: string;
+};
+
+const CustomerReviews = () => {
+    const [reviews, setReviews] = useState<Review[]>([
+        {
+            name: "John Doe",
+            review: "Great product! Highly recommend.",
+        },
+        {
+            name: "Jane Smith",
+            review: "I love this product. It's exactly what I was looking for.",
+        },
+        {
+            name: "Bob Johnson",
+            review: "This product didn't meet my expectations. I wouldn't buy it again.",
+        },
+        // Add more mock reviews here...
+    ]);
+
+    const handleReviewSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const name = (event.currentTarget.elements[0] as HTMLInputElement)
+            .value;
+        const review = (event.currentTarget.elements[1] as HTMLTextAreaElement)
+            .value;
+        setReviews((prevReviews) => [...prevReviews, { name, review }]);
+    };
+
+    return (
+        <div className="mt-6 mb-16 px-16">
+            <h2 className="text-2xl font-bold tracking-tight text-gray-900">
+                Customer Reviews
+            </h2>
+
+            <form onSubmit={handleReviewSubmit}>
+                {/*<input className="w-full p-2 my-2 border-grey" placeholder="Your name" />*/}
+                <Input className="w-full p-2 my-2" placeholder="Your name" />
+                {/*<textarea
+                    className="w-full h-20 p-2 my-2"
+                    placeholder="Add your review here"
+                ></textarea>*/}
+                <Textarea
+                    className="w-full h-20 p-2 my-2"
+                    placeholder="Add your review here"
+                />
+                <Button
+                    type="submit"
+                    className="rounded-full bg-primary text-white"
+                >
+                    Submit Review
+                </Button>
+            </form>
+
+            <ul>
+                {reviews.map((review, index) => (
+                    <li key={index} className="border p-2 my-2">
+                        <h3 className="font-bold">{review.name}</h3>
+                        <p>{review.review}</p>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
+};

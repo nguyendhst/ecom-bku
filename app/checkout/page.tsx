@@ -9,6 +9,7 @@ import { OrderSummaryForm } from "./_components/order-summary-form";
 import { Separator } from "../../components/ui/separator";
 import { Button } from "../../components/ui/button";
 import { CheckoutFormProvider } from "../../store/checkout";
+import { sendEmail } from "../../lib/email";
 
 // Checkout form
 export default function Page() {
@@ -51,7 +52,18 @@ export default function Page() {
                 } else {
                     // show error message
                 }
+            } else if (paymentType == "momo") {
+                const url = await createMomoOrder();
+				if (url) {
+					window.open(url, "_blank");
+				}
             }
+
+            await sendEmail({
+                name: customerInfoForm.getValues().name,
+                email: customerInfoForm.getValues().email,
+                message: "Your order has been placed successfully",
+            });
         }
     };
 

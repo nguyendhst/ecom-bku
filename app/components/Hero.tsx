@@ -20,7 +20,7 @@ export default async function Hero() {
                 <div className="mb-6 flex w-full flex-col justify-center sm:mb-12 lg:mb-0 lg:w-1/3 lg:pb-24 lg:pt-48">
                     <h1 className="mb-4 text-4xl font-bold text-black sm:text-5xl md:mb-8 md:text-6xl">
                         <LinearGradient
-                            gradient={["to left", "#392107 ,#663399"]}
+                            gradient={["to left", "#000000 ,#8a5d3c"]}
                         >
                             Brewing Excellence, One Bean at a Time
                         </LinearGradient>

@@ -1,29 +1,20 @@
+"use client";
+
 import Link from "next/link";
-import { type item, simplifiedProduct } from "../interface";
 import Image from "next/image";
-import { client } from "../../sanity/lib/client";
 import { toVND } from "../../lib/utils";
+import { useState } from "react";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "../../components/ui/select";
+import useSWR from "swr";
+import { getData } from "../../lib/get-product-data";
 
-async function getData(category: string) {
-    const query = `*[_type == "${category}"] {
-	_id,
-	name,
-	"product": product-> {
-	  name,
-	  "category": category->name,
-	  price,
-	  "slug": slug.current,
-	  description,
-	  "imageUrl": images[0].asset->url
-	},
-}`;
-
-    const data = await client.fetch(query);
-
-    return data;
-}
-
-export const dynamic = "force-dynamic";
+//export const dynamic = "force-dynamic";
 
 function formatCategoryName(category: string) {
     return (
@@ -32,21 +23,79 @@ function formatCategoryName(category: string) {
     );
 }
 
-export default async function CategoryPage({
-    params,
-}: {
-    params: { category: string };
-}) {
-    const queryResult = await getData(params.category);
-    const data: item[] = queryResult;
+const sortOptions = [
+    { value: "price asc", label: "Price: Low to High" },
+    { value: "price desc", label: "Price: High to Low" },
+];
+
+export default function Page({ params }: { params: { category: string } }) {
+    const [page, setPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(12);
+    const [sortBy, setSortBy] = useState("");
+
+    const {
+        data: { data, totalCount } = { data: undefined, totalCount: undefined },
+        isLoading,
+        mutate,
+    } = useSWR(
+        `${params.category}`,
+        () =>
+            getData(
+                params.category,
+                page,
+                itemsPerPage,
+                sortBy != "" ? sortBy : undefined
+            ),
+        {
+            revalidateOnFocus: false,
+            revalidateOnReconnect: false,
+        }
+    );
+
+    if (isLoading || !data) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <div className="bg-white h-full md:h-screen">
             <div className="mx-auto max-w-2xl px-4 sm:px-6  lg:max-w-7xl lg:px-8">
                 <div className="flex justify-between items-center">
                     <h2 className="text-2xl font-bold tracking-tight text-gray-900">
-                        Our Products for {formatCategoryName(params.category)}
+                        {formatCategoryName(params.category)} Products
                     </h2>
+
+                    <div className="flex items-center gap-x-1">
+                        <p>
+                            {data.length} products out of {totalCount}
+                        </p>
+                        <Select
+                            onValueChange={(value) => {
+                                setSortBy(value),
+                                    mutate((data) =>
+                                        getData(
+                                            params.category,
+                                            page,
+                                            itemsPerPage,
+                                            value
+                                        )
+                                    );
+                            }}
+                        >
+                            <SelectTrigger className="text-primary flex items-center gap-x-1">
+                                <SelectValue placeholder={"Sort By"} />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {sortOptions.map((option) => (
+                                    <SelectItem
+                                        value={option.value}
+                                        key={option.value}
+                                    >
+                                        {option.label}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    </div>
                 </div>
 
                 <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">

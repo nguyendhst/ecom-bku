@@ -30,7 +30,7 @@ export default function Navbar() {
                         style={font.style}
                     >
                         <LinearGradient
-                            gradient={["to left", "#392107 ,#663399"]}
+                            gradient={["to left", "#000000 ,#8a5d3c"]}
                             style={font.style}
                         >
                             Nature's Brew
