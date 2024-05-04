@@ -7,6 +7,7 @@ import { ShoppingBag } from "lucide-react";
 import { LinearGradient } from "react-text-gradients";
 import { useShoppingCart } from "../../store/cart-provider";
 import { Sonsie_One } from "next/font/google";
+import Image from "next/image";
 
 const links = [
     { name: "Home", href: "/" },
@@ -25,17 +26,26 @@ export default function Navbar() {
         <header className="mb-8 border-b">
             <div className="flex items-center justify-between mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl">
                 <Link href="/">
-                    <h1
-                        className="text-2xl md:text-4xl font-bold"
-                        style={font.style}
-                    >
-                        <LinearGradient
-                            gradient={["to left", "#000000 ,#8a5d3c"]}
+                    <div className="flex flex-row items-center justify-start">
+                        <Image
+                            src="/437530422_1114942873073385_6314017537517846940_n.png"
+                            width={50}
+                            height={50}
+                            alt="logo"
+                        />
+
+                        <h1
+                            className="text-2xl md:text-4xl font-bold"
                             style={font.style}
                         >
-                            Nature's Brew
-                        </LinearGradient>
-                    </h1>
+                            <LinearGradient
+                                gradient={["to left", "#000000 ,#8a5d3c"]}
+                                style={font.style}
+                            >
+                                Nature's Brew
+                            </LinearGradient>
+                        </h1>
+                    </div>
                 </Link>
 
                 <nav className="hidden gap-12 lg:flex 2xl:ml-16">
